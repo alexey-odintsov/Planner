@@ -3,11 +3,6 @@ package com.alekso.planner.model;
 public class Account {
     private long id;
     private long currencyId;
-
-    public String getName() {
-        return name;
-    }
-
     private String name;
     private AccountType type;
 
@@ -16,5 +11,9 @@ public class Account {
         this.currencyId = currencyId;
         this.name = name;
         this.type = AccountType.getById(typeId);
+    }
+
+    public String getName() {
+        return name;
     }
 }
