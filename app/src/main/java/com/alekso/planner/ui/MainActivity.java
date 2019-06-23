@@ -48,13 +48,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        AccountsFragment fragment;
-        fragment = (AccountsFragment) getSupportFragmentManager().findFragmentByTag(AccountsFragment.TAG);
-        if (fragment == null) {
-            fragment = AccountsFragment.newInstance();
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment, AccountsFragment.TAG).commit();
-
+        showAccountsFragment();
     }
 
     @Override
@@ -97,15 +91,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_tasks) {
 
         }
 
