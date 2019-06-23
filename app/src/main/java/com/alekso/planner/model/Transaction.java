@@ -23,6 +23,42 @@ public class Transaction {
         isVital = builder.isVital;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public long getDt() {
+        return dt;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public TransactionStatus getStatus() {
+        return status;
+    }
+
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public boolean isVital() {
+        return isVital;
+    }
+
     public static class Builder {
         private long id;
         private long dt;

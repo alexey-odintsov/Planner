@@ -8,16 +8,17 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.alekso.planner.model.Account;
 import com.alekso.planner.model.AccountType;
 
 import java.util.Date;
 
-import static com.alekso.planner.source.local.DbContract.*;
+import static com.alekso.planner.source.local.DbContract.AccountEntry;
+import static com.alekso.planner.source.local.DbContract.CurrencyEntry;
+import static com.alekso.planner.source.local.DbContract.TransactionEntry;
 
 public final class DbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "budget.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 3;
     private static final String TAG = DbHelper.class.getSimpleName();
     private static final boolean DEBUG = true;
 
@@ -37,7 +38,6 @@ public final class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TRANSACTIONS = "CREATE TABLE " + TransactionEntry.TABLE + " ("
             + TransactionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TransactionEntry.C_ACCOUNT_ID + " INTEGER NOT NULL,"
-            + TransactionEntry.C_CATEGORY_ID + " INTEGER NOT NULL,"
             + TransactionEntry.C_DATETIME + " INTEGER NOT NULL,"
             + TransactionEntry.C_AMOUNT + " REAL NOT NULL,"
             + TransactionEntry.C_BALANCE + " REAL NOT NULL,"
@@ -97,8 +97,6 @@ public final class DbHelper extends SQLiteOpenHelper {
         final String ACCOUNT_DEBIT_USD = "5";
         final String ACCOUNT_CREDIT_RUB = "6";
 
-        final String CATEGORY_FOOD = "1";
-
         // populate currency
         String[][] currencyData = {
                 {CURRENCY_RUB, "RUB", "р."},
@@ -135,17 +133,19 @@ public final class DbHelper extends SQLiteOpenHelper {
 
         // populate transactions
         String[][] transactionsData = {
-                {"1", ACCOUNT_CASH_RUB, CATEGORY_FOOD, String.valueOf(new Date().getTime()), "1000", "40000"},
+                {"1", ACCOUNT_CASH_RUB, String.valueOf(new Date().getTime()), "1000", "40000"},
+                {"2", ACCOUNT_DEBIT_RUB, String.valueOf(new Date().getTime()), "500", "40000"},
+                {"3", ACCOUNT_DEBIT_RUB, String.valueOf(new Date().getTime()), "30", "40000"},
+                {"4", ACCOUNT_CASH_RUB, String.valueOf(new Date().getTime()), "3500", "40000"},
         };
         cv = new ContentValues[transactionsData.length];
         for (int i = 0; i < transactionsData.length; i++) {
             cv[i] = new ContentValues();
             cv[i].put(TransactionEntry._ID, transactionsData[i][0]);
             cv[i].put(TransactionEntry.C_ACCOUNT_ID, transactionsData[i][1]);
-            cv[i].put(TransactionEntry.C_CATEGORY_ID, transactionsData[i][2]);
-            cv[i].put(TransactionEntry.C_DATETIME, transactionsData[i][3]);
-            cv[i].put(TransactionEntry.C_AMOUNT, transactionsData[i][4]);
-            cv[i].put(TransactionEntry.C_BALANCE, transactionsData[i][5]);
+            cv[i].put(TransactionEntry.C_DATETIME, transactionsData[i][2]);
+            cv[i].put(TransactionEntry.C_AMOUNT, transactionsData[i][3]);
+            cv[i].put(TransactionEntry.C_BALANCE, transactionsData[i][4]);
             db.insert(TransactionEntry.TABLE, null, cv[i]);
         }
     }

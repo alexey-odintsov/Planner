@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.alekso.planner.R;
 import com.alekso.planner.ui.accounts.AccountsFragment;
+import com.alekso.planner.ui.timeline.TimeLineFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -90,9 +91,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            showAccountsFragment();
         } else if (id == R.id.nav_tasks) {
 
+        } else if (id == R.id.nav_timeline) {
+            showTimeLineFragment();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -106,5 +109,13 @@ public class MainActivity extends AppCompatActivity
             fragment = AccountsFragment.newInstance();
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment, AccountsFragment.TAG).commit();
+    }
+
+    private void showTimeLineFragment() {
+        TimeLineFragment fragment = (TimeLineFragment) getSupportFragmentManager().findFragmentByTag(TimeLineFragment.TAG);
+        if (fragment == null) {
+            fragment = TimeLineFragment.newInstance();
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment, TimeLineFragment.TAG).commit();
     }
 }

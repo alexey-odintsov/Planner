@@ -21,7 +21,6 @@ public final class DbContract {
         public static final String C_DATETIME = "datetime";
         public static final String C_TYPE = "type";
         public static final String C_ACCOUNT_ID = "account_id";
-        public static final String C_CATEGORY_ID = "category_id";
         public static final String C_AMOUNT = "amount";
         public static final String C_BALANCE = "balance";
         public static final String C_STATUS = "status";
