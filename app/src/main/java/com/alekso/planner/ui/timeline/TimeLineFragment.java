@@ -1,5 +1,6 @@
 package com.alekso.planner.ui.timeline;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alekso.planner.R;
+import com.alekso.planner.model.Transaction;
 import com.alekso.planner.model.decorators.TimeLineItem;
 
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class TimeLineFragment extends Fragment implements BaseTimeLineView {
 
     public static final String TAG = TimeLineFragment.class.getSimpleName();
     private static final boolean DEBUG = true;
+    static final String PARAM_TRANSACTION = "param_transaction";
+    public static final int REQUEST_NEW_TRANSACTION = 1;
 
     @NonNull
     private BaseTimeLinePresenter presenter;
@@ -73,6 +77,7 @@ public class TimeLineFragment extends Fragment implements BaseTimeLineView {
 
         view.findViewById(R.id.fab).setOnClickListener((v) -> {
             TransactionDialog dialog = new TransactionDialog();
+            dialog.setTargetFragment(this, REQUEST_NEW_TRANSACTION);
             dialog.show(getFragmentManager(), TransactionDialog.TAG);
         });
     }
@@ -80,5 +85,13 @@ public class TimeLineFragment extends Fragment implements BaseTimeLineView {
     @Override
     public void setData(ArrayList<TimeLineItem> data) {
         adapter.setItems(data);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_NEW_TRANSACTION && resultCode == 1) {
+            final Transaction transaction = (Transaction) data.getSerializableExtra(PARAM_TRANSACTION);
+            presenter.onTransactionAdded(transaction);
+        }
     }
 }

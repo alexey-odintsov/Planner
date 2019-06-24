@@ -17,4 +17,8 @@ public enum TransactionType {
 
         return TransactionType.EXPENSE_INCOME;
     }
+
+    public int getId() {
+        return id;
+    }
 }

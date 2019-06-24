@@ -1,6 +1,8 @@
 package com.alekso.planner.model;
 
-public class Transaction {
+import java.io.Serializable;
+
+public class Transaction implements Serializable {
     private long id;
     private long dt;
     private TransactionType type;

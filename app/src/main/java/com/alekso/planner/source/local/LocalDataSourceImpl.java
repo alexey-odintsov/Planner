@@ -1,11 +1,13 @@
 package com.alekso.planner.source.local;
 
 import android.app.Application;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import com.alekso.planner.model.Account;
+import com.alekso.planner.model.Transaction;
 import com.alekso.planner.model.decorators.TimeLineItem;
 import com.alekso.planner.source.local.readers.AccountsReader;
 import com.alekso.planner.source.local.readers.TimeLineItemsReader;
@@ -94,5 +96,20 @@ public class LocalDataSourceImpl implements LocalDataSource {
                 null
         );
         return TimeLineItemsReader.fromCursor(c);
+    }
+
+    @Override
+    public long addTransaction(Transaction transaction) {
+        ContentValues cv = new ContentValues();
+        cv.put(TransactionEntry.C_ACCOUNT_ID, transaction.getAccountId());
+        cv.put(TransactionEntry.C_TYPE, transaction.getType().getId());
+        cv.put(TransactionEntry.C_STATUS, transaction.getStatus().getId());
+        cv.put(TransactionEntry.C_IS_VITAL, transaction.isVital());
+        cv.put(TransactionEntry.C_DATETIME, transaction.getDt());
+        cv.put(TransactionEntry.C_COMMENT, transaction.getComment());
+        cv.put(TransactionEntry.C_AMOUNT, transaction.getAmount());
+        cv.put(TransactionEntry.C_BALANCE, transaction.getBalance());
+
+        return dbHelper.getReadableDatabase().insert(TransactionEntry.TABLE, null, cv);
     }
 }

@@ -17,4 +17,8 @@ public enum TransactionStatus {
 
         return TransactionStatus.PLANNED;
     }
+
+    public int getId() {
+        return id;
+    }
 }

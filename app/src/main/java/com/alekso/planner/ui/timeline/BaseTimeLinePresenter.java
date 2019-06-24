@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.alekso.planner.model.Transaction;
 import com.alekso.planner.model.decorators.TimeLineItem;
 import com.alekso.planner.ui.BasePresenter;
 
@@ -19,4 +20,6 @@ public abstract class BaseTimeLinePresenter extends BasePresenter<BaseTimeLineVi
     public abstract void load();
 
     public abstract MutableLiveData<ArrayList<TimeLineItem>> getItems();
+
+    public abstract void onTransactionAdded(Transaction transaction);
 }

@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.alekso.planner.model.Account;
+import com.alekso.planner.model.Transaction;
 import com.alekso.planner.model.decorators.TimeLineItem;
 
 import java.util.ArrayList;
@@ -34,6 +34,11 @@ public class TimeLinePresenter extends BaseTimeLinePresenter {
     @Override
     public MutableLiveData<ArrayList<TimeLineItem>> getItems() {
         return data;
+    }
+
+    @Override
+    public void onTransactionAdded(Transaction transaction) {
+        data.postValue(repository.getTimeLine(transaction.getDt()));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.alekso.planner.source;
 
 import com.alekso.planner.model.Account;
+import com.alekso.planner.model.Transaction;
 import com.alekso.planner.model.decorators.TimeLineItem;
 import com.alekso.planner.source.local.LocalDataSource;
 import com.alekso.planner.source.remote.RemoteDataSource;
@@ -31,5 +32,9 @@ public class Repository {
 
     public ArrayList<TimeLineItem> getTimeLine(long dt) {
         return localDataSource.getTimeLine(dt);
+    }
+
+    public long addTransaction(Transaction transaction) {
+        return localDataSource.addTransaction(transaction);
     }
 }

@@ -1,5 +1,6 @@
 package com.alekso.planner.ui.timeline;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,15 @@ import com.alekso.planner.model.Account;
 import com.alekso.planner.model.Transaction;
 import com.alekso.planner.model.decorators.TimeLineItem;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class TimeLineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy H:mm:ss");
+    private static DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols());
 
     ItemClickHandler itemClickHandler;
     private ArrayList<TimeLineItem> items = new ArrayList<>();
@@ -49,14 +53,19 @@ public class TimeLineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
+        final Context context = holder.itemView.getContext();
         final TimeLineItem timeLineItem = items.get(position);
         final Transaction transaction = timeLineItem.getTransaction();
         final Account account = timeLineItem.getAccount();
         vh.id.setText("#" + transaction.getId());
         vh.accountName.setText(account.getName());
-        vh.amount.setText(String.valueOf(transaction.getAmount()));
-        vh.balance.setText(String.valueOf(transaction.getBalance()));
+        vh.amount.setText(decimalFormat.format(transaction.getAmount()));
+        vh.balance.setText(decimalFormat.format(transaction.getBalance()));
         vh.dt.setText(dateFormat.format(new Date(transaction.getDt())));
+
+        vh.amount.setTextColor(transaction.getAmount() > 0.0 ?
+                context.getResources().getColor(R.color.colorPrimaryDark) :
+                context.getResources().getColor(R.color.colorAccent));
     }
 
     @Override
