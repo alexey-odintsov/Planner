@@ -10,17 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alekso.planner.R;
-import com.alekso.planner.model.Account;
 import com.alekso.planner.model.decorators.TimeLineItem;
-import com.alekso.planner.ui.accounts.AccountsAdapter;
-import com.alekso.planner.ui.accounts.AccountsPresenter;
-import com.alekso.planner.ui.accounts.BaseAccountsPresenter;
-import com.alekso.planner.ui.accounts.BaseAccountsView;
 
 import java.util.ArrayList;
 
@@ -76,6 +70,11 @@ public class TimeLineFragment extends Fragment implements BaseTimeLineView {
         presenter.setView(this);
         presenter.init();
         presenter.load();
+
+        view.findViewById(R.id.fab).setOnClickListener((v) -> {
+            TransactionDialog dialog = new TransactionDialog();
+            dialog.show(getFragmentManager(), TransactionDialog.TAG);
+        });
     }
 
     @Override
